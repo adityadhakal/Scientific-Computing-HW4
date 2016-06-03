@@ -1,0 +1,45 @@
+function [x] = newton(f,fd,a,tc)
+%function [x] will take in a non linear function f and its derivative fd and
+% a initial starting point a evaluate them using Newton's method.
+%tc is the terminating condition, in this case it is a number eg. 10^-7
+%if the output of two consecative iterations differ by number lower than
+%the terminating condition then we will terminate the program.
+%also e is the upper bound on the error
+
+format long
+
+%variable to test termination 
+y1 = 2*a;
+
+%variable for the loop
+loop = 1;
+counter = 0;
+
+%setting up display
+disp('step          x                       y')
+disp('-----      --------                ------')
+%infinite loop starts here with terminating condition
+while loop
+    y = f(a);
+    z = fd(a);
+    x = a - y/z;
+    
+    counter = counter+1;
+    disp([counter x y])
+    %disp('y1')
+    %disp(y1)
+    %if the y is zero, it is solved otherwise reiterate with values changed
+    if y == 0.0
+        loop = 0;
+    else
+        a = x;
+    end
+    %termination
+    if abs(abs(y1)-abs(y)) < tc
+        loop = 0;
+    else
+        y1 = y;
+    end
+   
+end
+
